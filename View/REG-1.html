@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模版页面</title>
+    <link rel="stylesheet" href="../Themes/Plugs/Bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../Themes/Plugs/FontAwesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../Themes/Plugs/Swiper/css/swiper.css">
+    <link rel="stylesheet" href="../Themes/CSS/Base.css">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- header -->
+        <div class="header">
+
+        </div>
+
+        <!-- main -->
+        <div class="main">
+
+        </div>
+
+        <!-- footer -->
+        <div class="footer">
+
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../Themes/JS/JQuery/jquery.min1.9.1.js"></script>
+    <script src="../Themes/Plugs/Bootstrap/js/bootstrap.js"></script>
+    <script src="../Themes/Plugs/Swiper/js/swiper.js"></script>
+    <script>
+        var str = "ase124234h343uy234534fa4534h4464646d4d56d456d4564a654a4SS4DAS";
+        getStr(str);
+        //字符串中数字查找返回为数组
+        function getStr(params) {
+            var arr = [];
+            var temp = "";
+            for (var i = 0; i < params.length; i++) {
+                if (str.charAt(i) >= "0" && params.charAt(i) <= "9") {
+                    temp += str.charAt(i);
+                } else {
+                    if (temp) {
+                        arr.push(temp);
+                        temp = "";
+                    }
+                }
+
+            }
+            if (temp) {
+                arr.push(temp);
+                temp = "";
+            }
+
+            console.log(arr);
+            return arr;
+        }
+
+    </script>
+
+</body>
+
+</html>

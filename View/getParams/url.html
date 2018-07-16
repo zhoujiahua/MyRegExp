@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="codeList">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+    </div>
+    <button type="button" id="btn">获取URL参数</button>
+
+    <!-- JS -->
+    <script>
+        window.onload = function () {
+            let oBtn = document.getElementById("btn");
+            oBtn.onclick = function () {
+                let oInput = document.getElementById("codeList").getElementsByTagName("input"),
+                    urlParams = ["name", "phone", "address"],
+                    urlCode = [];
+                console.log(urlCode);
+                for (let i = 0; i < urlParams.length; i++) {
+                    urlCode.push(getQueryString(urlParams[i]));
+                    oInput[i].value = urlCode[i];
+                }
+            }
+
+            /* URL参数处理函数 */
+            function getQueryString(params) {
+                let reg = new RegExp("(^|&)" + params + "=([^&]*)(&|$)", "i"),
+                    r = window.location.search.substr(1).match(reg)
+                if (r != null) {
+                    /* unescape无法解析中文会出现乱问题 decodeURI可以解析中文 */
+                    // return unescape(r[2]);
+                    return decodeURI(r[2]);
+                } else {
+                    return null
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

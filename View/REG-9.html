@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模版页面</title>
+    <link rel="stylesheet" href="../Themes/Plugs/Bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../Themes/Plugs/FontAwesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../Themes/Plugs/Swiper/css/swiper.css">
+    <link rel="stylesheet" href="../Themes/CSS/Base.css">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- header -->
+        <div class="header">
+
+        </div>
+
+        <!-- main -->
+        <div class="main">
+            
+        </div>
+
+        <!-- footer -->
+        <div class="footer">
+
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../Themes/JS/JQuery/jquery.min1.9.1.js"></script>
+    <script src="../Themes/Plugs/Bootstrap/js/bootstrap.js"></script>
+    <script src="../Themes/Plugs/Swiper/js/swiper.js"></script>
+    <script>
+        /* 
+            ()小括号的作用：
+                1.分组
+                2.子组引用
+                从左到右，碰到的第一个小括号叫第一组，第二个叫的二组.....以此内推
+        */
+        //2016/1/1 2016.1.1
+        window.onload = function () {
+            var str = "2016-1-1";
+            var re = /\d+-/g;
+            console.log(str.match(re));
+            var re1 = /(\d+)(-)/g;
+            var newStr = str.replace(re1,function(s0,s1,s2){
+                console.group("----------------")
+                console.log("s0:"+s0);
+                console.log("s1:"+s1);
+                console.log("s2:"+s2);
+                return s1+"/";
+            })
+            console.log(newStr);
+        }
+    </script>
+</body>
+
+</html>

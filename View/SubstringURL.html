@@ -1,0 +1,233 @@
+﻿@using CNKI.TPI.Web.Base @if (ViewBag.DetialField != null && @ViewBag.DetialField.Rows.Count > 0) {
+<h2 class='doc-title'>@Html.Raw(ColumnAliasHelper.GetContent(ViewBag.DetialField, @ViewBag.DbName, 0, "标题")) </h2>
+<div class="doc-value">
+    @Html.Raw(ColumnAliasHelper.GetContent(ViewBag.DetialField, @ViewBag.DbName, 0, "作者"))
+    <span class="mr10">@Html.Raw(ColumnAliasHelper.GetContent(ViewBag.DetialField, @ViewBag.DbName, 0, "发布时间"))</span>
+    <a id="origionUrl" target="_blank" style="text-decoration:underline;" href="@ColumnAliasHelper.GetContent(ViewBag.DetialField, ViewBag.DbName, 0, "
+        链接 ")">原文链接</a>
+
+    @if (SessionHelper.GetUserInfo() != null && ((ConfigHelper.IsAnonymousControlEnabled() && SessionHelper.GetUserInfo().UserCode.ToUpper()
+    != ConfigHelper.GetAnonymousAccount().ToUpper()) || !ConfigHelper.IsAnonymousControlEnabled())) {
+    <span class="favCate">
+        <a onclick="showFavCate('@ColumnAliasHelper.GetContent(ViewBag.DetialField, @ViewBag.DbName, 0, " 标题 ")')" class='btn btn-m btn-prim-f ml10'>
+            <i class="iconfont icon-star"></i>收藏</a>
+    </span>
+    }
+</div>
+if (ViewBag.FileInfo != null && ViewBag.FileInfo.Count > 0) {
+<script type="text/javascript">
+    $(function ($) {
+
+        function G(s) {
+            return document.getElementById(s);
+        }
+
+        function getStyle(obj, attr) {
+            if (obj.currentStyle) {
+                return obj.currentStyle[attr];
+            } else {
+                return getComputedStyle(obj, false)[attr];
+            }
+        }
+
+        function Animate(obj, json) {
+            if (obj.timer) {
+                clearInterval(obj.timer);
+            }
+            obj.timer = setInterval(function () {
+                for (var attr in json) {
+                    var iCur = parseInt(getStyle(obj, attr));
+                    iCur = iCur ? iCur : 0;
+                    var iSpeed = (json[attr] - iCur) / 5;
+                    iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                    obj.style[attr] = iCur + iSpeed + 'px';
+                    if (iCur == json[attr]) {
+                        clearInterval(obj.timer);
+                    }
+                }
+            }, 30);
+        }
+
+        var oPic = G("picBox");
+        var oList = G("listBox");
+
+        var oPrev = G("prev1");
+        var oNext = G("next1");
+        var oPrevTop = G("prevTop");
+        var oNextTop = G("nextTop");
+
+        var oPicLi = oPic.getElementsByTagName("li");
+        var oListLi = oList.getElementsByTagName("li");
+        var len1 = oPicLi.length;
+        var len2 = oListLi.length;
+
+        var oPicUl = oPic.getElementsByTagName("ul")[0];
+        var oListUl = oList.getElementsByTagName("ul")[0];
+        var w1 = oPicLi[0].offsetWidth;
+        var w2 = oListLi[0].offsetWidth;
+
+        oPicUl.style.width = w1 * len1 + "px";
+        oListUl.style.width = w2 * len2 + "px";
+
+        var index = 0;
+
+        var num = 4;
+        var num2 = Math.ceil(num / 2);
+
+        function Change() {
+
+            Animate(oPicUl, {
+                left: -index * w1
+            });
+
+            if (index < num2) {
+                Animate(oListUl, {
+                    left: 0
+                });
+            } else if (index + num2 <= len2) {
+                Animate(oListUl, {
+                    left: -(index - num2 + 1) * w2
+                });
+            } else {
+                Animate(oListUl, {
+                    left: -(len2 - num) * w2
+                });
+            }
+
+            for (var i = 0; i < len2; i++) {
+                oListLi[i].className = "";
+                if (i == index) {
+                    oListLi[i].className = "on";
+                }
+            }
+        }
+
+        oNextTop.onclick = oNext.onclick = function () {
+            index++;
+            index = index == len2 ? 0 : index;
+            Change();
+        }
+
+        oPrevTop.onclick = oPrev.onclick = function () {
+            index--;
+            index = index == -1 ? len2 - 1 : index;
+            Change();
+        }
+
+        for (var i = 0; i < len2; i++) {
+            oListLi[i].index = i;
+            oListLi[i].onclick = function () {
+                index = this.index;
+                Change();
+            }
+        }
+    })
+</script>
+<div class="tc news-pic">
+    @*//图片*@
+    <div class="mod18 video-con-l video-con-l1">
+        <div class="directionBtn">
+            <a id="prev1" class="direction-btn prev"></a>
+            <a id="next1" class="direction-btn next"></a>
+        </div>
+        <span id="prevTop" class="direction-btn prev"></span>
+        <span id="nextTop" class="direction-btn next"></span>
+        <div id="picBox" class="picBox">
+            <ul class="cf">
+                @{ int i = 1; foreach (CNKI.TPI.Web.Search.Model.METADATA_FILE item in ViewBag.FileInfo) {
+                <li>
+                    <a name="@i" href="@ResourceHelper.GetDigitalPicURL((int)@ViewBag.DbID, @item.SYSID)" target="_blank">
+                        <img width="600" height="340" src="@ResourceHelper.GetDigitalPicURL((int)@ViewBag.DbID, @item.SYSID)" alt="" />
+                    </a>
+                </li>
+                } }
+            </ul>
+        </div>
+        <div class="listBoxP">
+            <div id="listBox" class="listBox">
+                <ul class="cf">
+                    @if (ViewBag.FileInfo != null) { foreach (CNKI.TPI.Web.Search.Model.METADATA_FILE item in ViewBag.FileInfo) {
+                    <li>
+                        <i class="arr2"></i>
+                        <img width="72" height="54" src="@ResourceHelper.GetSmallPicURL((int)@ViewBag.DbID, @item.SYSID)" />
+                    </li>
+                    } }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<style>
+    .doc-con {
+        text-align: center;
+        word-break: break-all;
+        word-wrap: break-word;
+        text-indent: 1.8rem;
+    }
+
+    .doc-con::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    .doc-con p {
+        text-align: left;
+    }
+
+    .doc-con img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+</style>
+<div class="doc-con">
+    @{ string textstr = ColumnAliasHelper.GetContent(ViewBag.DetialField, @ViewBag.DbName, 0, "全文"); textstr = StringHelper.DealInfo(textstr);
+    @Html.Raw(textstr) }
+</div>
+
+<div class="recbox"> </div>
+
+<!--全文内图片-->
+<script>
+    $(function () {
+        var matchs = $("#origionUrl").attr("href").match(/^http(s)?:\/\/(.*?)\//);
+        var origionUrl = matchs.length ? matchs[0] : "";
+        $(".doc-con img").each(function () {
+            $(this).attr("src","");
+            var imgSrc = $(this).attr("src");
+
+            if (origionUrl) {
+                if (imgSrc.indexOf("http") != 0) {
+                    $(this).attr("src", origionUrl + imgSrc);
+                }
+            } else {
+                $(this).remove();
+            }
+        });
+    });
+	
+	window.onload = function () {
+			let oLink = $(".detail-link").attr("href"),
+				reg = /^http(s)?:\/\/(.*)\//g,
+				oMatchs = oLink.match(reg),
+				oReturnUrl = oMatchs.length ? oMatchs[0] : "";
+			$(".article-detail-con").find("a").each(function (i,t) {
+				// $(this).attr("href", "");
+				let urlHref = $(this).attr("href"),
+					fileName = urlHref.match(/\/(.*)/g),
+					fileUrl = fileName.length ? fileName[0] : "";
+				if (oReturnUrl) {
+					if (urlHref.indexOf("http") != 0) {
+						let oUrlAdd = oReturnUrl + fileUrl;
+						$(this).attr("href", oUrlAdd);
+						console.log(oUrlAdd);
+					}
+				} else {
+					$(this).remove();
+				}
+			});
+		};
+</script>
+}

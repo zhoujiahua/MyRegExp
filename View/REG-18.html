@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模版页面</title>
+    <link rel="stylesheet" href="../Themes/Plugs/Bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../Themes/Plugs/FontAwesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../Themes/Plugs/Swiper/css/swiper.css">
+    <link rel="stylesheet" href="../Themes/CSS/Base.css">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- header -->
+        <div class="header">
+
+        </div>
+
+        <!-- main -->
+        <div class="main">
+            
+        </div>
+
+        <!-- footer -->
+        <div class="footer">
+            
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../Themes/JS/JQuery/jquery.min1.9.1.js"></script>
+    <script src="../Themes/Plugs/Bootstrap/js/bootstrap.js"></script>
+    <script src="../Themes/Plugs/Swiper/js/swiper.js"></script>
+    <script>
+        /* 
+            找出一串字符串中出现次数最多的
+        */
+        window.onload = function () {
+            var str = "qvaxaavdagsfasdhfpoohibbbbbbbbbbbbbsfngsfgaha"
+            var arr = str.split("");
+            var newArr = arr.sort();
+            var oNewArr = newArr.join("");
+            var  re =/(\w)\1+/g;
+            var index = 0;
+            var targetS = "";
+            var newStr = oNewArr.replace(re,function(s0,s1){
+                if(index < s0.length){
+                    index = s0.length;
+                    targetS = s1;
+                }
+            })
+            console.log("出现次数最多的字符是："+targetS+"出现的次数是："+index);
+
+        }
+
+    </script>
+</body>
+
+</html>

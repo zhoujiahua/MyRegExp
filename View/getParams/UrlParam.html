@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="codeList">
+        <input type="text" value="请输入...">
+        <input type="text" value="请输入...">
+        <input type="text" value="请输入...">
+    </div>
+    <button type="button" id="btn">登录</button>
+
+    <!-- JS -->
+    <script>
+        window.onload = function () {
+            let oBtn = document.getElementById("btn"),
+                oInput = document.getElementById("codeList").getElementsByTagName("input");
+            for (let i = 0; i < oInput.length; i++) {
+                oInput[i].onfocus = function () {
+                    this.value = "";
+                };
+                oInput[i].onblur = function () {
+                    if (this.value == "") {
+                        this.value = "请输入...";
+                    }
+                };
+            }
+
+            oBtn.onclick = function () {
+                let oVa = getValue();
+                window.location.href = oVa;
+            }
+            function getValue() {
+                let oUrl = "url.html",
+                    oUrlAdd = oUrl + "?" + "name=" + oInput[0].value + "&" + "phone=" + oInput[1].value + "&" + "address=" + oInput[2].value;
+                return oUrlAdd;
+            }
+        }
+    </script>
+</body>
+
+</html>
